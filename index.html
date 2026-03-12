@@ -149,7 +149,7 @@
       document.getElementById("year").textContent =
         new Date().getFullYear().toString();
 
-      // Headline: shuffle letter order each animation cycle (every 15s)
+      // Headline: first cycle left-to-right, then shuffle order every 15s
       (function () {
         var chars = document.querySelectorAll(".hero-headline .char");
         if (!chars.length) return;
@@ -165,7 +165,6 @@
             chars[k].style.setProperty("--i", indices[k]);
           }
         }
-        shuffleOrder();
         setInterval(shuffleOrder, 15000);
       })();
 
