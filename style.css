@@ -1,26 +1,31 @@
 :root {
-  /* Warm retro / polaroid palette */
-  --bg: #211126; /* deep plum */
-  --bg-alt: #2d1632; /* slightly lighter plum */
-  --paper: #f7e9d5; /* polaroid paper */
-  --paper-2: #f2dcc2;
-  --brown: #3b2330; /* warm brown ink */
-  --brown-2: #4a2a39;
-  --accent: #ff8b3d; /* orange */
-  --accent2: #ff5a86; /* warm pink */
-  --accent-soft: rgba(255, 139, 61, 0.18);
-  --text: #fff5eb; /* warm off-white */
-  --muted: #e6c7ab; /* muted text on dark */
-  --ink: #2b1822; /* text on paper */
-  --ink-muted: #7b5562; /* muted text on paper */
+  /* Theme: 5F0177, 1379FB, C74BDE */
+  --purple: #5f0177;   /* deep violet */
+  --blue: #1379fb;     /* bright blue */
+  --magenta: #c74bde;  /* bright magenta */
+  --bg: #1a0522;       /* dark from purple */
+  --bg-alt: #2d0a3d;
+  --paper: #f5eefa;    /* soft lavender-white */
+  --paper-2: #ebe0f5;
+  --brown: #2d1a35;    /* purple-brown */
+  --brown-2: #3d2248;
+  --accent: #1379fb;   /* blue as primary accent */
+  --accent2: #c74bde;  /* magenta as secondary */
+  --blue-soft: rgba(19, 121, 251, 0.22);
+  --accent-soft: rgba(199, 75, 222, 0.2);
+  --purple-soft: rgba(95, 1, 119, 0.35);
+  --text: #f8f4fc;
+  --muted: #b8a8c9;
+  --ink: #1f1528;
+  --ink-muted: #5a4d6b;
 
   /* Backwards-compatible tokens */
   --card: var(--paper);
-  --border: rgba(247, 233, 213, 0.18);
+  --border: rgba(245, 238, 250, 0.35);
   --radius-lg: 24px;
   --radius-md: 16px;
   --radius-pill: 999px;
-  --shadow-soft: 0 22px 60px rgba(0, 0, 0, 0.8);
+  --shadow-soft: 0 22px 60px rgba(0, 0, 0, 0.75);
 }
 
 *,
@@ -40,9 +45,24 @@ body {
   font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
   background:
-    linear-gradient(180deg, rgba(45, 22, 50, 0.92), rgba(15, 7, 20, 0.94)),
+    linear-gradient(
+      135deg,
+      rgba(95, 1, 119, 0.7) 0%,
+      rgba(95, 1, 119, 0.7) 20%,
+      rgba(19, 121, 251, 0.45) 20%,
+      rgba(19, 121, 251, 0.45) 40%,
+      rgba(199, 75, 222, 0.4) 40%,
+      rgba(199, 75, 222, 0.4) 60%,
+      rgba(19, 121, 251, 0.5) 60%,
+      rgba(19, 121, 251, 0.5) 80%,
+      rgba(95, 1, 119, 0.68) 80%,
+      rgba(95, 1, 119, 0.68) 100%
+    ),
+    linear-gradient(180deg, rgba(95, 1, 119, 0.5) 0%, rgba(45, 30, 90, 0.55) 50%, rgba(19, 80, 200, 0.5) 100%),
     url("assets/mosqido-wideshot.jpeg") center top / cover no-repeat fixed;
-  background-blend-mode: multiply;
+  background-blend-mode: multiply, multiply;
+  background-size: 100% 100%, 100% 100%, cover;
+  background-position: 0 0, 0 0, center top;
   color: var(--text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -50,20 +70,52 @@ body {
   overflow-x: hidden;
 }
 
-/* Subtle "dirty lens / film" layer over the whole page */
+/* Bright "dirty lens" layer — warm + blue lift, lighter vignette */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
+  z-index: 1;
   background:
-    radial-gradient(circle at 20% 15%, rgba(255, 216, 165, 0.18) 0, transparent 45%),
-    radial-gradient(circle at 85% 25%, rgba(255, 140, 95, 0.14) 0, transparent 45%),
-    radial-gradient(circle at 30% 85%, rgba(0, 0, 0, 0.35) 0, transparent 55%),
-    radial-gradient(circle at 70% 80%, rgba(0, 0, 0, 0.28) 0, transparent 55%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.08));
+    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(19, 121, 251, 0.28) 0, transparent 55%),
+    radial-gradient(circle at 15% 20%, rgba(199, 75, 222, 0.2) 0, transparent 45%),
+    radial-gradient(circle at 90% 18%, rgba(19, 121, 251, 0.22) 0, transparent 48%),
+    radial-gradient(circle at 25% 85%, rgba(0, 0, 0, 0.18) 0, transparent 55%),
+    radial-gradient(circle at 78% 82%, rgba(0, 0, 0, 0.14) 0, transparent 55%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.06), transparent 30%, transparent 70%, rgba(0, 0, 0, 0.08));
   mix-blend-mode: soft-light;
-  opacity: 0.55;
+  opacity: 0.72;
+}
+
+/* Final dirty lens layer — over everything */
+.dirty-lens-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.35) 100%),
+    radial-gradient(circle at 20% 30%, rgba(199, 75, 222, 0.1) 0, transparent 40%),
+    radial-gradient(circle at 80% 25%, rgba(19, 121, 251, 0.1) 0, transparent 38%),
+    radial-gradient(circle at 60% 75%, rgba(0, 0, 0, 0.2) 0, transparent 45%),
+    radial-gradient(circle at 10% 85%, rgba(0, 0, 0, 0.25) 0, transparent 50%);
+  mix-blend-mode: soft-light;
+  opacity: 0.85;
+}
+
+/* Film grain overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch' result=%27n%27/%3E%3CfeColorMatrix in=%27n%27 type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='0.5' fill='%23fff'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  opacity: 0.42;
+  mix-blend-mode: overlay;
 }
 
 a {
@@ -90,10 +142,10 @@ img {
   backdrop-filter: blur(14px);
   background: linear-gradient(
     to bottom,
-    rgba(33, 17, 38, 0.94),
-    rgba(33, 17, 38, 0.78)
+    rgba(95, 1, 119, 0.92),
+    rgba(45, 15, 75, 0.88)
   );
-  border-bottom: 1px solid rgba(247, 233, 213, 0.12);
+  border-bottom: 1px solid rgba(245, 238, 250, 0.2);
 }
 
 .header-inner {
@@ -109,11 +161,11 @@ img {
   font-size: 1.05rem;
   letter-spacing: 0.32em;
   text-transform: lowercase;
-  background: linear-gradient(20deg, #ffb347, #ffe8c4, #ff86a4);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 10px rgba(255, 139, 61, 0.22);
+  color: var(--paper);
+  text-shadow:
+    0 0 28px rgba(199, 75, 222, 0.4),
+    0 0 12px rgba(19, 121, 251, 0.2),
+    0 1px 3px rgba(0, 0, 0, 0.25);
 }
 
 .nav {
@@ -136,7 +188,7 @@ img {
   width: 0;
   height: 2px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  background: linear-gradient(90deg, var(--blue), var(--magenta));
   transition: width 0.2s ease;
 }
 
@@ -175,11 +227,11 @@ img {
   letter-spacing: 0.24em;
   text-transform: lowercase;
   margin: 0 0 0.6rem;
-  background: linear-gradient(135deg, #ffb347, #ffe8c4, #ff86a4);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 18px rgba(255, 139, 61, 0.22);
+  color: var(--paper);
+  text-shadow:
+    0 0 36px rgba(199, 75, 222, 0.4),
+    0 0 14px rgba(19, 121, 251, 0.25),
+    0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .subtitle {
@@ -196,19 +248,28 @@ img {
   margin-bottom: 1.3rem;
 }
 
-.hero-tags {
+.hero-socials {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 1rem;
+  align-items: center;
 }
 
-.hero-tags span {
-  font-size: 0.75rem;
-  padding: 0.3rem 0.8rem;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  background: rgba(7, 7, 21, 0.9);
+.hero-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--muted);
+  transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.hero-social-link:hover {
+  color: var(--text);
+  transform: translateY(-2px);
+}
+
+.hero-social-link svg {
+  display: block;
 }
 
 .hero-art {
@@ -222,16 +283,10 @@ img {
   width: 280px;
   height: 280px;
   border-radius: 50%;
-  background: conic-gradient(
-    from 220deg,
-    #ff8b3d,
-    #ff5a86,
-    #ffd58a,
-    #ff8b3d
-  );
+  background: var(--blue);
   filter: blur(1px);
-  opacity: 0.35;
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75);
+  opacity: 0.5;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
 }
 
 .hero-photo {
@@ -240,10 +295,10 @@ img {
   height: 230px;
   border-radius: 50%;
   object-fit: cover;
-  border: 6px solid #fdf3e4;
+  border: 6px solid var(--paper);
   box-shadow:
-    0 22px 45px rgba(0, 0, 0, 0.9),
-    0 0 0 1px rgba(0, 0, 0, 0.25);
+    0 22px 48px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(0, 0, 0, 0.2);
 }
 
 /* Sections */
@@ -253,7 +308,7 @@ img {
 }
 
 .section-alt {
-  background: rgba(45, 22, 50, 0.55);
+  background: rgba(95, 1, 119, 0.18);
 }
 
 .section-heading {
@@ -282,13 +337,34 @@ img {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
   gap: 1.6rem;
-  align-items: flex-start;
+  align-items: start;
+}
+
+.music-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  min-width: 0;
 }
 
 .music-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 1.4rem;
+}
+
+.spotify-embed {
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+}
+
+.spotify-embed iframe {
+  display: block;
+  width: 100%;
+  height: 352px;
 }
 
 .music-card {
@@ -514,9 +590,9 @@ img {
 }
 
 .btn.primary {
-  background: linear-gradient(120deg, var(--accent), var(--accent2));
+  background: var(--accent);
   color: #fff;
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.65);
 }
 
 .btn.primary:hover {
@@ -536,7 +612,7 @@ img {
 
 .btn.ghost {
   background: transparent;
-  border-color: rgba(247, 233, 213, 0.24);
+  border-color: rgba(19, 121, 251, 0.35);
   color: var(--text);
 }
 
@@ -569,22 +645,23 @@ img {
   letter-spacing: 0.18em;
   padding: 0.24rem 0.8rem;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(247, 233, 213, 0.22);
+  border: 1px solid rgba(199, 75, 222, 0.25);
+  background: rgba(95, 1, 119, 0.25);
   color: var(--muted);
 }
 
 .pill.accent {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  color: rgba(255, 245, 235, 0.95);
+  border-color: var(--magenta);
+  background: rgba(199, 75, 222, 0.28);
+  color: #f8f4fc;
 }
 
 /* Footer */
 
 .site-footer {
   padding: 1.4rem 0 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(15, 7, 20, 0.92);
+  border-top: 1px solid rgba(199, 75, 222, 0.12);
+  background: rgba(95, 1, 119, 0.85);
 }
 
 .footer-inner {
