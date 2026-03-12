@@ -44,25 +44,7 @@ body {
 body {
   font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(95, 1, 119, 0.7) 0%,
-      rgba(95, 1, 119, 0.7) 20%,
-      rgba(19, 121, 251, 0.45) 20%,
-      rgba(19, 121, 251, 0.45) 40%,
-      rgba(199, 75, 222, 0.4) 40%,
-      rgba(199, 75, 222, 0.4) 60%,
-      rgba(19, 121, 251, 0.5) 60%,
-      rgba(19, 121, 251, 0.5) 80%,
-      rgba(95, 1, 119, 0.68) 80%,
-      rgba(95, 1, 119, 0.68) 100%
-    ),
-    linear-gradient(180deg, rgba(95, 1, 119, 0.5) 0%, rgba(45, 30, 90, 0.55) 50%, rgba(19, 80, 200, 0.5) 100%),
-    url("assets/mosqido-wideshot.jpeg") center top / cover no-repeat fixed;
-  background-blend-mode: multiply, multiply;
-  background-size: 100% 100%, 100% 100%, cover;
-  background-position: 0 0, 0 0, center top;
+  background: var(--bg);
   color: var(--text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -70,22 +52,19 @@ body {
   overflow-x: hidden;
 }
 
-/* Bright "dirty lens" layer — warm + blue lift, lighter vignette */
+/* Background: gradients at 10% opacity + photo */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 1;
+  z-index: -1;
   background:
-    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(19, 121, 251, 0.28) 0, transparent 55%),
-    radial-gradient(circle at 15% 20%, rgba(199, 75, 222, 0.2) 0, transparent 45%),
-    radial-gradient(circle at 90% 18%, rgba(19, 121, 251, 0.22) 0, transparent 48%),
-    radial-gradient(circle at 25% 85%, rgba(0, 0, 0, 0.18) 0, transparent 55%),
-    radial-gradient(circle at 78% 82%, rgba(0, 0, 0, 0.14) 0, transparent 55%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.06), transparent 30%, transparent 70%, rgba(0, 0, 0, 0.08));
-  mix-blend-mode: soft-light;
-  opacity: 0.72;
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath fill='%235f0177' fill-opacity='0.1' d='M0 0C12 6 28 34 50 50C72 66 88 94 100 100V100H0Z'/%3E%3C/svg%3E"),
+    url("assets/mosqido-wideshot.jpeg") center top / cover no-repeat;
+  background-size: 100% 100%, cover;
+  background-position: 0 0, center top;
+  opacity: 0.95;
 }
 
 /* Final dirty lens layer — over everything */
@@ -139,13 +118,10 @@ img {
   position: sticky;
   top: 0;
   z-index: 20;
-  backdrop-filter: blur(14px);
-  background: linear-gradient(
-    to bottom,
-    rgba(95, 1, 119, 0.92),
-    rgba(45, 15, 75, 0.88)
-  );
-  border-bottom: 1px solid rgba(245, 238, 250, 0.2);
+  background: rgba(26, 5, 34, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .header-inner {
@@ -155,17 +131,30 @@ img {
   padding: 0.9rem 0;
 }
 
+.header-spacer {
+  flex: 1;
+  min-width: 0;
+}
+
+.header-inner .nav {
+  flex-shrink: 0;
+}
+
+.header-socials {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  align-items: center;
+}
+
 .logo {
   font-family: "Orbitron", system-ui, sans-serif;
   font-weight: 700;
   font-size: 1.05rem;
   letter-spacing: 0.32em;
   text-transform: lowercase;
-  color: var(--paper);
-  text-shadow:
-    0 0 28px rgba(199, 75, 222, 0.4),
-    0 0 12px rgba(19, 121, 251, 0.2),
-    0 1px 3px rgba(0, 0, 0, 0.25);
+  color: #fce2b1;
 }
 
 .nav {
@@ -203,56 +192,55 @@ img {
 /* Hero */
 
 .hero {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
   padding: 4.5rem 0 3.5rem;
 }
 
-.hero-inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-  gap: 3.5rem;
-  align-items: center;
+.hero-headline {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
 }
 
-.eyebrow {
-  text-transform: lowercase;
-  letter-spacing: 0.22em;
-  font-size: 0.68rem;
-  color: var(--muted);
-  margin: 0 0 0.6rem;
-}
-
-.hero-text h1 {
+.hero-headline h1 {
   font-family: "Orbitron", system-ui, sans-serif;
-  font-size: clamp(2.9rem, 5.3vw, 3.9rem);
-  letter-spacing: 0.24em;
+  font-size: clamp(3.8rem, 8vw, 6rem);
+  letter-spacing: 0.32em;
   text-transform: lowercase;
-  margin: 0 0 0.6rem;
-  color: var(--paper);
-  text-shadow:
-    0 0 36px rgba(199, 75, 222, 0.4),
-    0 0 14px rgba(19, 121, 251, 0.25),
-    0 1px 4px rgba(0, 0, 0, 0.3);
-}
-
-.subtitle {
-  color: var(--muted);
-  max-width: 32rem;
-  margin-bottom: 1.6rem;
-  text-shadow: 0 0 7px rgba(0, 0, 0, 0.7);
-}
-
-.hero-actions {
+  margin: 0;
+  color: #fce2b1;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.9rem;
-  margin-bottom: 1.3rem;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 0.08em;
 }
 
-.hero-socials {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  align-items: center;
+.hero-headline .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.4em);
+  animation: headline-reveal 15s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  animation-delay: calc(var(--i) * 0.3s);
+}
+
+@keyframes headline-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(0.4em);
+  }
+  4% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-social-link {
@@ -272,11 +260,21 @@ img {
   display: block;
 }
 
+.hero-art-bubble-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  position: relative;
+}
+
 .hero-art {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .hero-circle {
@@ -295,7 +293,7 @@ img {
   height: 230px;
   border-radius: 50%;
   object-fit: cover;
-  border: 6px solid var(--paper);
+  border: 6px solid #fce2b1;
   box-shadow:
     0 22px 48px rgba(0, 0, 0, 0.85),
     0 0 0 1px rgba(0, 0, 0, 0.2);
@@ -334,10 +332,8 @@ img {
 /* Music */
 
 .music-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
-  gap: 1.6rem;
-  align-items: start;
+  display: block;
+  margin-bottom: 2rem;
 }
 
 .music-left {
@@ -353,11 +349,16 @@ img {
   gap: 1.4rem;
 }
 
+.spotify-embed-actions {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
 .spotify-embed {
   width: 100%;
-  border-radius: var(--radius-md);
+  border-radius: 0;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
 }
 
@@ -369,13 +370,15 @@ img {
 
 .music-card {
   padding: 1.4rem 1.3rem;
-  border-radius: var(--radius-md);
-  background: var(--paper);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  color: var(--ink);
+  border-radius: 0;
+  background: rgba(26, 5, 34, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text);
   box-shadow:
     0 18px 40px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(255, 255, 255, 0.12);
+    0 0 0 1px rgba(255, 255, 255, 0.08);
   position: relative;
   overflow: hidden;
 }
@@ -387,7 +390,7 @@ img {
 
 .music-card .meta {
   margin: 0 0 0.9rem;
-  color: var(--ink-muted);
+  color: var(--muted);
   font-size: 0.88rem;
 }
 
@@ -414,24 +417,27 @@ img {
 }
 
 .playlist-card {
-  background: var(--brown);
-  border-color: rgba(0, 0, 0, 0.22);
-  color: var(--paper);
-  transform: rotate(-0.5deg);
+  background: rgba(26, 5, 34, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  border-radius: 0;
 }
 
 .services-card {
   padding: 1.6rem 1.4rem 1.5rem;
-  border-radius: var(--radius-lg);
-  background: var(--brown);
-  border: 1px solid rgba(0, 0, 0, 0.22);
-  color: var(--paper);
+  border-radius: 0;
+  background: rgba(245, 230, 211, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #2c2420;
   box-shadow:
-    0 22px 48px rgba(0, 0, 0, 0.7),
-    0 0 0 1px rgba(255, 255, 255, 0.12);
+    0 22px 48px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
-  transform: rotate(0.6deg);
 }
 
 .services-card h3 {
@@ -440,6 +446,42 @@ img {
 
 .services-card .meta + .meta {
   margin-top: 0.5rem;
+}
+
+/* Thought bubble: pops out of hero art to the right */
+.services-card.thought-bubble {
+  overflow: visible;
+  transform: none;
+  max-width: 320px;
+  flex-shrink: 0;
+}
+
+.services-card.thought-bubble::before {
+  content: "";
+  position: absolute;
+  left: -0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(245, 230, 211, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.services-card.thought-bubble::after {
+  content: "";
+  position: absolute;
+  left: -1.15rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(245, 230, 211, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .reelcrafter-block {
@@ -457,7 +499,7 @@ img {
 }
 
 .reelcrafter-embed {
-  border-radius: var(--radius-md);
+  border-radius: 0;
   overflow: hidden;
 }
 
@@ -482,9 +524,9 @@ img {
   align-items: center;
   justify-content: space-between;
   padding: 0.95rem 1.2rem;
-  border-radius: var(--radius-md);
-  background: radial-gradient(circle at left, #ff4b8b33 0, #060015 70%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+  background: rgba(26, 5, 34, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .show-date {
@@ -517,26 +559,42 @@ img {
 
 .about-highlight {
   padding: 1.6rem 1.4rem;
-  border-radius: var(--radius-lg);
-  background: var(--paper);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  color: var(--ink);
+  border-radius: 0;
+  background: rgba(26, 5, 34, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text);
   box-shadow:
     0 22px 48px rgba(0, 0, 0, 0.7),
-    0 0 0 1px rgba(255, 255, 255, 0.12);
+    0 0 0 1px rgba(255, 255, 255, 0.08);
   position: relative;
   overflow: hidden;
 }
 
-.playlist-card,
-.services-card {
-  background: var(--brown);
-  color: var(--paper);
+.playlist-card {
+  background: rgba(26, 5, 34, 0.85);
+  color: var(--text);
 }
 
-.playlist-card .meta,
+.playlist-card .meta {
+  color: var(--muted);
+}
+
+.playlist-card .pill.accent {
+  background: rgba(252, 226, 177, 0.15);
+  border-color: rgba(252, 226, 177, 0.4);
+  color: #fce2b1;
+}
+
 .services-card .meta {
-  color: rgba(247, 233, 213, 0.86);
+  color: #5a5248;
+}
+
+.services-card .pill.accent {
+  background: rgba(44, 36, 32, 0.12);
+  border-color: rgba(44, 36, 32, 0.3);
+  color: #2c2420;
 }
 
 /* Dirty lens overlay on cards */
@@ -660,8 +718,10 @@ img {
 
 .site-footer {
   padding: 1.4rem 0 2rem;
-  border-top: 1px solid rgba(199, 75, 222, 0.12);
-  background: rgba(95, 1, 119, 0.85);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(26, 5, 34, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .footer-inner {
@@ -688,23 +748,17 @@ img {
   color: var(--text);
 }
 
+/* Brand color: only for the word "mosqido" */
+.brand {
+  color: #fce2b1;
+}
+
 /* Responsive */
 
 @media (max-width: 900px) {
-  .hero-inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .hero-art {
-    order: -1;
-  }
-
   .hero {
     padding-top: 3.2rem;
-  }
-
-  .music-layout {
-    grid-template-columns: minmax(0, 1fr);
+    min-height: 60vh;
   }
 
   .music-grid {
@@ -733,6 +787,11 @@ img {
   .hero-circle {
     width: 220px;
     height: 220px;
+  }
+
+  .hero-photo {
+    width: 180px;
+    height: 180px;
   }
 }
 
