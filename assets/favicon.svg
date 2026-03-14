@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <radialGradient id="paper" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#f5f0e8" />
+      <stop offset="100%" stop-color="#ebe4d8" />
+    </radialGradient>
+  </defs>
+  <circle cx="16" cy="16" r="16" fill="url(#paper)" />
+  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-family="Courier Prime, Courier New, Consolas, monospace" font-size="22" font-weight="400" fill="#1a1a1a">m</text>
+</svg>
