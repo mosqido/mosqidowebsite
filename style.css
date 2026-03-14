@@ -924,6 +924,21 @@ img {
     box-sizing: border-box;
   }
 
+  .header-socials {
+    padding-left: 0.5rem;
+    gap: 1.25rem;
+  }
+
+  .header-socials .hero-social-link {
+    padding: 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
   .section {
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
