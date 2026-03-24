@@ -815,6 +815,21 @@ img {
   color: #5a5a5a;
 }
 
+.footer-links-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-legal-link {
+  color: #5a5a5a;
+}
+
+.footer-legal-link:hover {
+  color: #1a1a1a;
+}
+
 .social-links {
   display: flex;
   flex-wrap: wrap;
@@ -827,6 +842,135 @@ img {
 
 .social-links a:hover {
   color: #1a1a1a;
+}
+
+/* Cookie banner */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(245, 240, 232, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 1rem 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.06);
+}
+
+.cookie-banner-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cookie-banner-text {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #3d3d3d;
+  line-height: 1.5;
+  flex: 1;
+  min-width: 200px;
+}
+
+.cookie-banner-link {
+  color: var(--purple);
+  text-decoration: underline;
+}
+
+.cookie-banner-link:hover {
+  color: var(--blue);
+}
+
+.cookie-banner-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+/* Impressum modal */
+.impressum-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.impressum-modal:not([hidden]) {
+  display: flex;
+}
+
+.impressum-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+.impressum-content {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #f5f0e8;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.impressum-inner {
+  padding: 1.75rem 1.5rem 1.5rem;
+}
+
+.impressum-heading {
+  margin: 0 0 0.5rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.impressum-intro {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  color: #5a5a5a;
+}
+
+.impressum-block {
+  margin-bottom: 1.25rem;
+}
+
+.impressum-block p {
+  margin: 0 0 0.35rem;
+  font-size: 0.9rem;
+  color: #1a1a1a;
+}
+
+.impressum-block a {
+  color: var(--purple);
+  text-decoration: underline;
+}
+
+.impressum-block a:hover {
+  color: var(--blue);
+}
+
+.impressum-close {
+  margin-top: 0.5rem;
+}
+
+body.impressum-open {
+  overflow: hidden;
+}
+
+body.impressum-open .dirty-lens-overlay {
+  z-index: 1;
 }
 
 /* Brand color: only for the word "mosqido" */
@@ -1019,6 +1163,20 @@ img {
     flex-direction: column;
     align-items: center;
     text-align: center;
+  }
+
+  .footer-links-row {
+    flex-direction: column;
+  }
+
+  .cookie-banner-inner {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .cookie-banner-actions {
+    justify-content: center;
   }
 }
 

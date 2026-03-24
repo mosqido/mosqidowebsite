@@ -15,6 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap"
       rel="stylesheet"
     />
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="a8cd1efc-6460-4f5d-b933-f2a0b9e10a4c"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -108,7 +109,7 @@
 				I've been making music for most of my life, but pursued it professionally in 2017 when I moved to Berlin to study at the Abbey Road Institute.
 				Since graduating in 2019, I've been producing, mixing and mastering for many artists while also releasing music myself.
 				As 'mosqido' I make music as a creative outlet, to have fun and push my own boundaries.
-				Whether I'm making an indie-pop record and singing myself or producing a techno/dance track for the club, I always try to challenge myself and learn something new from each project.
+				Whether i'm making an indie-pop record and singing myself or producing a techno/dance track for the club, I always try to challenge myself and learn something new from each project.
                 Experimentation and staying open-minded are part of my core values. Many of my favorite sounds and sections happened because of happy accidents and, sometimes, hours of trial and error.
 				While collaborating, I value creating a space of trust where there is no judgment, so we can focus on what's important: Creating and having fun.
                 
@@ -169,13 +170,57 @@
     <footer class="site-footer">
       <div class="container footer-inner">
         <p>© <span id="year"></span> <span class="brand">mosqido</span>. All rights reserved.</p>
-        <div class="social-links">
-          <a href="https://www.instagram.com/mosqido/" target="_blank">Instagram</a>
-          <a href="https://open.spotify.com/artist/4OOMO3QMGWWIZrFAVjROV8" target="_blank">Spotify</a>
-          <a href="https://www.youtube.com/channel/UCetNBftSTZ6l4YSmpvHo65A" target="_blank">YouTube</a>
+        <div class="footer-links-row">
+          <a href="#impressum" id="impressum-link" class="footer-legal-link">Impressum</a>
+          <div class="social-links">
+            <a href="https://www.instagram.com/mosqido/" target="_blank">Instagram</a>
+            <a href="https://open.spotify.com/artist/4OOMO3QMGWWIZrFAVjROV8" target="_blank">Spotify</a>
+            <a href="https://www.youtube.com/channel/UCetNBftSTZ6l4YSmpvHo65A" target="_blank">YouTube</a>
+          </div>
         </div>
       </div>
     </footer>
+
+    <!-- Cookie banner -->
+    <div id="cookie-banner" class="cookie-banner" role="dialog" aria-label="Cookie consent" aria-live="polite" hidden>
+      <div class="cookie-banner-inner container">
+        <p class="cookie-banner-text">
+          We use cookies and similar technologies to improve your experience and analyse site traffic.
+          By clicking &quot;Accept&quot;, you consent to our use of cookies.
+          <a href="#impressum" id="cookie-privacy-link" class="cookie-banner-link">Privacy / Impressum</a>
+        </p>
+        <div class="cookie-banner-actions">
+          <button type="button" id="cookie-decline" class="btn secondary small">Decline</button>
+          <button type="button" id="cookie-accept" class="btn primary small">Accept</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Impressum modal -->
+    <div id="impressum-modal" class="impressum-modal" role="dialog" aria-labelledby="impressum-title" aria-modal="true" hidden>
+      <div class="impressum-backdrop" id="impressum-close-backdrop" tabindex="-1"></div>
+      <div class="impressum-content">
+        <div class="impressum-inner">
+          <h1 id="impressum-title" class="impressum-heading">Impressum</h1>
+          <h2 id="m46">Diensteanbieter</h2>
+          <p>Moritz Kerndl</p>
+          <p>Emanuelstrasse 10a</p>
+          <p>10317 Berlin</p>
+
+          <h2 id="m56">Kontaktmöglichkeiten</h2>
+          <p>E-Mail-Adresse: <a href="mailto:moritzkerndl@gmail.com">moritzkerndl@gmail.com</a></p>
+          <h2 id="m58">Angaben zum Unternehmen</h2>
+          <p>Umsatzsteuer Identifikationsnummer (USt-ID): 86011327597</p>
+
+          <h2 id="m172">Social Media und andere Onlinepräsenzen</h2>
+          <p>Dieses Impressum gilt auch für die folgenden Social-Media-Präsenzen und Onlineprofile: </p>
+          <p><a href="https://instagram.com/mosqido" target="_blank">https://instagram.com/mosqido</a></p>
+          <p><a href="https://open.spotify.com/artist/4OOMO3QMGWWIZrFAVjROV8" target="_blank">https://open.spotify.com/artist/4OOMO3QMGWWIZrFAVjROV8</a></p>
+          <p><a href="https://www.youtube.com/@mosqido" target="_blank">https://www.youtube.com/@mosqido</a></p>
+          <button type="button" class="impressum-close btn primary small" id="impressum-close-btn" aria-label="Close Impressum">Close</button>
+        </div>
+      </div>
+    </div>
 
     <script>
       // Set current year in footer
@@ -201,11 +246,17 @@
         setInterval(shuffleOrder, 20000);
       })();
 
-      // Smooth scroll for in-page links
+      // Smooth scroll for in-page links (except #impressum — opens modal)
       document.querySelectorAll('a[href^="#"]').forEach((link) => {
         link.addEventListener("click", (e) => {
           const targetId = link.getAttribute("href");
           if (!targetId || targetId === "#") return;
+          if (targetId === "#impressum") {
+            e.preventDefault();
+            document.getElementById("impressum-modal").hidden = false;
+            document.body.classList.add("impressum-open");
+            return;
+          }
           const targetEl = document.querySelector(targetId);
           if (!targetEl) return;
           e.preventDefault();
@@ -215,6 +266,55 @@
           });
         });
       });
+
+      // Cookie banner
+      (function () {
+        var COOKIE_CONSENT_KEY = "mosqido_cookie_consent";
+        var banner = document.getElementById("cookie-banner");
+        var acceptBtn = document.getElementById("cookie-accept");
+        var declineBtn = document.getElementById("cookie-decline");
+
+        if (localStorage.getItem(COOKIE_CONSENT_KEY)) {
+          banner.hidden = true;
+          return;
+        }
+        banner.hidden = false;
+
+        function hideBanner(choice) {
+          localStorage.setItem(COOKIE_CONSENT_KEY, choice);
+          banner.hidden = true;
+        }
+        acceptBtn.addEventListener("click", function () { hideBanner("accepted"); });
+        declineBtn.addEventListener("click", function () { hideBanner("declined"); });
+      })();
+
+      // Impressum modal open/close (capture phase so we get the click before overlays)
+      (function () {
+        var modal = document.getElementById("impressum-modal");
+        var closeBtn = document.getElementById("impressum-close-btn");
+        var backdrop = document.getElementById("impressum-close-backdrop");
+
+        function closeImpressum() {
+          if (modal) {
+            modal.hidden = true;
+            document.body.classList.remove("impressum-open");
+          }
+        }
+
+        document.addEventListener("click", function (e) {
+          if (!modal || modal.hidden) return;
+          var t = e.target;
+          if (t === closeBtn || t === backdrop || (closeBtn && closeBtn.contains(t))) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeImpressum();
+          }
+        }, true);
+
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && modal && !modal.hidden) closeImpressum();
+        });
+      })();
     </script>
     <div class="dirty-lens-overlay" aria-hidden="true"></div>
   </body>
